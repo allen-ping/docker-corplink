@@ -77,20 +77,6 @@ kasm_startup() {
     fi
 
 } 
-
-sudo iptables -F
-sudo iptables -t nat -F
-sudo iptables -t nat -A POSTROUTING -j MASQUERADE
-sudo iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
-sudo /usr/bin/supervisord 2>/dev/null || true
-
-if [ -n "$GO" ] || [ -n "$ASSIGN" ] ; then
-    kasm_exec
-else
-    kasm_startup
-fi
-
-
 echo ">>> Injecting VPN bypass routes (Kasm Official Source-IP Style)..."
 
 # 1. 获取默认网关
@@ -109,3 +95,17 @@ if [ -n "$GW" ] && [ -n "$ETH0_IP" ]; then
 else
     echo ">>> Warning: Could not detect default gateway or eth0 IP!"
 fi
+
+sudo iptables -F
+sudo iptables -t nat -F
+sudo iptables -t nat -A POSTROUTING -j MASQUERADE
+sudo iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+sudo /usr/bin/supervisord 2>/dev/null || true
+
+if [ -n "$GO" ] || [ -n "$ASSIGN" ] ; then
+    kasm_exec
+else
+    kasm_startup
+fi
+
+
