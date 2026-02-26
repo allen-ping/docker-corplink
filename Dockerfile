@@ -34,8 +34,7 @@ RUN chmod 0440 /etc/sudoers.d/kasm-user
 
 COPY custom_startup.sh /dockerstartup/custom_startup.sh
 
-RUN dos2unix /dockerstartup/custom_startup.sh && \
-    chmod +x /dockerstartup/custom_startup.sh && \
+RUN chmod +x /dockerstartup/custom_startup.sh && \
     chown 1000:1000 /dockerstartup/custom_startup.sh
 
 
