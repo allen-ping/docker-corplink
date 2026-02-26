@@ -16,7 +16,7 @@ docker run -d \
   -p 8888:8118 \
   -p 1088:1080 \
   -e VNC_PW=password \
-  sleepymole/corplink:latest
+  allencool/corplink:latest
 ```
 
 Both arm64 and amd64 architectures are supported.
