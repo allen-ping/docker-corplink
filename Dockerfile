@@ -31,12 +31,12 @@ RUN mkdir -p $HOME && chown -R 1000:0 $HOME
 
 RUN echo "kasm-user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/kasm-user
 RUN chmod 0440 /etc/sudoers.d/kasm-user
-COPY start-wrapper.sh /start-wrapper.sh
 
-# 4. 赋予执行权限
-RUN chmod +x /start-wrapper.sh
+COPY custom_startup.sh /dockerstartup/custom_startup.sh
 
-# 5. 覆盖原始的启动命令，改为运行我们的脚本
-ENTRYPOINT ["/start-wrapper.sh"]
+RUN dos2unix /dockerstartup/custom_startup.sh && \
+    chmod +x /dockerstartup/custom_startup.sh && \
+    chown 1000:1000 /dockerstartup/custom_startup.sh
+
 
 USER 1000
