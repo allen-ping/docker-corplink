@@ -32,10 +32,5 @@ RUN mkdir -p $HOME && chown -R 1000:0 $HOME
 RUN echo "kasm-user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/kasm-user
 RUN chmod 0440 /etc/sudoers.d/kasm-user
 
-COPY custom_startup.sh /dockerstartup/custom_startup.sh
-
-RUN chmod +x /dockerstartup/custom_startup.sh && \
-    chown 1000:1000 /dockerstartup/custom_startup.sh
-
 
 USER 1000
